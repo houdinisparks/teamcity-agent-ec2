@@ -1,0 +1,82 @@
+{
+    "min_packer_version": "1.1.2",
+    "variables": {
+        "teamcity_base_url": "",
+        "ami_base_name": "teamcity-agent",
+        "aws_region": "ap-southeast-1",
+        "subnet_id": "",
+        "temporary_security_group_source_cidr": "0.0.0.0/0",
+        "associate_public_ip_address": "true",
+        "ssh_interface": "",
+        "docker_version": "18.06.0~ce~3-0~ubuntu",
+        "docker_compose_version": "1.22.0"
+    },
+    "builders": [
+        {
+            "name": "teamcity-agent-ami",
+            "ami_name": "{{ user `ami_base_name` }}-{{isotime | clean_ami_name}}",
+            "ami_description": "An Ubuntu 18.04 AMI for TeamCity agents.",
+            "instance_type": "t3.micro",
+            "region": "{{user `aws_region`}}",
+            "type": "amazon-ebs",
+            "subnet_id": "{{user `subnet_id`}}",
+            "associate_public_ip_address": "{{user `associate_public_ip_address`}}",
+            "ssh_interface": "{{user `ssh_interface`}}",
+            "temporary_security_group_source_cidr": "{{user `temporary_security_group_source_cidr`}}",
+            "source_ami_filter": {
+                "filters": {
+                    "virtualization-type": "hvm",
+                    "architecture": "x86_64",
+                    "name": "*ubuntu-bionic-18.04-amd64-server-*",
+                    "block-device-mapping.volume-type": "gp2",
+                    "root-device-type": "ebs"
+                },
+                "owners": [
+                    "099720109477"
+                ],
+                "most_recent": true
+            },
+            "ssh_username": "ubuntu",
+            "run_tags": {
+                "Name": "{{user `ami_base_name` }}-{{isotime | clean_ami_name}}",
+                "Base Name": "{{user `ami_base_name` }}",
+                "Timestamp": "{{isotime \"2006-01-02 03:04:05\"}}",
+                "Packer": "yes",
+                "Docker Version": "{{user `docker_version` }}",
+                "Docker Compose Version": "{{user `docker_compose_version`}}"
+            },
+            "tags": {
+                "Name": "{{user `ami_base_name` }}-{{isotime | clean_ami_name}}",
+                "Base Name": "{{user `ami_base_name` }}",
+                "Timestamp": "{{isotime \"2006-01-02 03:04:05\"}}",
+                "Packer": "yes",
+                "Docker Version": "{{user `docker_version` }}",
+                "Docker Compose Version": "{{user `docker_compose_version`}}"
+            },
+            "snapshot_tags": {
+                "Name": "{{user `ami_base_name` }}-{{isotime | clean_ami_name}}",
+                "Base Name": "{{user `ami_base_name` }}",
+                "Timestamp": "{{isotime \"2006-01-02 03:04:05\"}}",
+                "Packer": "yes",
+                "Docker Version": "{{user `docker_version` }}",
+                "Docker Compose Version": "{{user `docker_compose_version`}}"
+            }
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "ansible",
+            "pause_before": "10s",
+            "playbook_file": "{{ template_dir }}/packer/site.yml",
+            "user": "ubuntu",
+            "extra_arguments": [
+                "-e",
+                "docker_version={{user `docker_version`}} docker_compose_version={{user `docker_compose_version`}}",
+                "-e",
+                "teamcity_base_url={{user `teamcity_base_url`}}",
+                "-e",
+                "ansible_python_interpreter=/usr/bin/python3"
+            ]
+        }
+    ]
+}
