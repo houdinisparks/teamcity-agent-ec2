@@ -8,6 +8,7 @@ IAM user) that is provided to a TeamCity server for it to manage its cloud profi
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | agent_instance_profile_arn | ARN of the Instance profile to be assigned to TeamCity Agents | string | - | yes |
+| agent_role_arn | ARN of the role that is assigned to the instance profile for TeamCity agents | string | - | yes |
 | allow_spot | Allow TeamCity server to use spot instances | string | `false` | no |
 | ami_ids | List of AMI IDs that can be launched by the TeamCity server | string | `<list>` | no |
 | key_pair_ids | List of Key Pair IDs that can be used with instances launched by TeamCity server | string | `<list>` | no |
