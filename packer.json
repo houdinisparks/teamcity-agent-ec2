@@ -8,6 +8,7 @@
         "temporary_security_group_source_cidr": "0.0.0.0/0",
         "associate_public_ip_address": "true",
         "ssh_interface": "",
+        "ebs_volume_size": "50",
         "docker_version": "18.06.0~ce~3-0~ubuntu",
         "docker_compose_version": "1.22.0"
     },
@@ -36,6 +37,14 @@
                 ],
                 "most_recent": true
             },
+            "ami_block_device_mappings": [
+                {
+                    "device_name": "/dev/sda1",
+                    "volume_size": "{{user `ebs_volume_size` }}",
+                    "volume_type": "gp2",
+                    "delete_on_termination": true
+                }
+            ],
             "ssh_username": "ubuntu",
             "run_tags": {
                 "Name": "{{user `ami_base_name` }}-{{isotime | clean_ami_name}}",
