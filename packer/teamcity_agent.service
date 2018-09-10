@@ -12,7 +12,6 @@ User={{ teamcity_user }}
 Group={{ teamcity_user }}
 Restart=on-failure
 RestartSec=10
-RemainAfterExit=yes
 SyslogIdentifier=teamcity-agent
 
 [Install]
