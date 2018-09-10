@@ -6,10 +6,8 @@ Requires=network.target
 After=syslog.target network.target
 
 [Service]
-Type=forking
-ExecStart={{ install_directory }}/bin/agent.sh start
+ExecStart={{ install_directory }}/bin/agent.sh run
 ExecStop={{ install_directory }}/bin/agent.sh stop
-PIDFile={{ install_directory }}/logs/buildAgent.pid
 User={{ teamcity_user }}
 Group={{ teamcity_user }}
 Restart=on-failure

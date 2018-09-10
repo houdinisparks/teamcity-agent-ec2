@@ -50,6 +50,7 @@
         groups:
           - docker
         name: "{{ teamcity_user }}"
+        shell: /bin/bash
         state: present
       become: yes
   - name: Install TeamCity Agent
