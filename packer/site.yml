@@ -21,7 +21,7 @@
     become: yes
     loop:
       - python3-pip
-      - default-jre
+      - openjdk-8-jdk
       - git
       - unzip
   - name: Install Docker and Docker Compose

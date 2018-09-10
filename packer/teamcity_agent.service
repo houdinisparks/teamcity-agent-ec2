@@ -16,8 +16,6 @@ Restart=on-failure
 RestartSec=10
 RemainAfterExit=yes
 SyslogIdentifier=teamcity-agent
-# When upgrading, TeamCity agent exits with this status code
-RestartPreventExitStatus=143
 
 [Install]
 WantedBy=multi-user.target
