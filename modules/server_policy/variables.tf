@@ -2,6 +2,10 @@ variable "agent_instance_profile_arn" {
   description = "ARN of the Instance profile to be assigned to TeamCity Agents"
 }
 
+variable "agent_role_arn" {
+  description = "ARN of the role that is assigned to the instance profile for TeamCity agents"
+}
+
 variable "ami_ids" {
   description = "List of AMI IDs that can be launched by the TeamCity server"
   default     = ["*"]
@@ -29,10 +33,5 @@ variable "vpc_ids" {
 
 variable "allow_spot" {
   description = "Allow TeamCity server to use spot instances"
-  default     = false
-}
-
-variable "use_iam_role" {
-  description = "Allow TeamCity server to use IAM Roles"
   default     = false
 }

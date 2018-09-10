@@ -15,10 +15,17 @@ git clone --recurse-submodules https://github.com/gdsace/teamcity-agent-ec2.git
 
 The Terraform module provisions the following:
 
-- VPC to contain the TeamCity agents in either public or private subnets
+- Security Group for TeamCity agents (no rules -- you have to define your own)
+- Create an instance profile for agents (with no policies attached)
 - IAM policy to allow TeamCity to manage agent instances *only* in the VPC
-- (Optional) control access to specific subnets in the VPC
-- Either IAM User to provide to TeamCity or attach an IAM policy to a role that TeamCity server uses
+- (Optional) control access to specific subnets in the VPC or a specific VPC
+- Either create a user or an IAM Instance role for TeamCity server and attach the policy provisioned by this module to the user or role.
+
+After provisioning the Module, you will need to do the following:
+
+- Assign rules to the Security Group provisioned so that your instances can reach the TeamCity server or any other resources your builds require
+- Optionally attach any policies to the IAM instance profile for your agents.
+- Create an Access Key and Secret for your IAM user if you are using it with Terraform or the AWS Console.
 
 Options (Generate Kotlin code):
 - One per subnet
@@ -28,6 +35,35 @@ Options (Generate Kotlin code):
 - SG
 - user_data
 - tags (Name!) -
+
+### Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| allow_spot | Allow TeamCity server to use spot instances | string | `false` | no |
+| ami_ids | List of AMI IDs that can be launched by the TeamCity server | string | `<list>` | no |
+| instance_profile_name | Name to attach to agent instance profile | string | `teamcity-agent` | no |
+| key_pair_ids | List of Key Pair IDs that can be used with instances launched by TeamCity server | string | `<list>` | no |
+| security_group_name | Name of the security group | string | `teamcity-agent` | no |
+| server_policy_name | Name of the policy to allow TeamCity servers to manage cloud agents | string | `teamcity-server-cloud-agents` | no |
+| subnet_ids | List of Subnet IDs that instances can be launched into by TeamCity server | string | `<list>` | no |
+| tags | Tags for resouces that support it | string | `<map>` | no |
+| teamcity_server_iam_role | If `use_iam_role` is true, provide the name to the TeamCity role | string | `` | no |
+| teamcity_server_user_name | If provided, creates an IAM user with this user name and have the policy attached | string | `` | no |
+| use_iam_role | Attach policy to TeamCity server IAM role | string | `false` | no |
+| vpc_ids | List of VPC IDs that instances can be launched into by TeamCity server | list | - | yes |
+
+### Outputs
+
+| Name | Description |
+|------|-------------|
+| agent_iam_role_arn | IAM Role ARN for agents |
+| agent_iam_role_name | IAM Role name for agents |
+| agent_security_group_id | ID of the security group for agents |
+| server_iam_policy_arn | ARN of IAM policy to attach to TeamCity server's user or IAM instance profile for managing agents |
+| server_iam_policy_name | Name of IAM policy to attach to TeamCity server's user or IAM instance profile for managing agents |
+| server_user_arn | ARN of the TeamCity server user created |
+| server_user_name | Name of the TeamCity server user created |
 
 ### Child Modules
 
