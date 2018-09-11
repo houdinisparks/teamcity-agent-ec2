@@ -119,9 +119,9 @@ data "aws_iam_policy_document" "teamcity_server_cloud_profile" {
     ]
 
     condition {
-      test = "StringEquals"
+      test     = "StringEquals"
       variable = "iam:PassedToService"
-      values = ["ec2.amazonaws.com"]
+      values   = ["ec2.amazonaws.com"]
     }
   }
 }
