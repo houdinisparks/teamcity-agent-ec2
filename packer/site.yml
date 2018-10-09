@@ -1,5 +1,5 @@
 ---
-- name: TeamCity Server AMI
+- name: TeamCity Agent AMI
   hosts: all
   vars:
     # TeamCity Base URL
