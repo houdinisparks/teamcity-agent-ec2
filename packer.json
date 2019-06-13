@@ -5,30 +5,32 @@
         "ami_base_name": "teamcity-agent",
         "aws_region": "ap-southeast-1",
         "subnet_id": "",
-        "temporary_security_group_source_cidr": "0.0.0.0/0",
+        "temporary_security_group_source_cidrs": "0.0.0.0/0",
         "associate_public_ip_address": "true",
         "ssh_interface": "",
         "ebs_volume_size": "50",
         "docker_version": "18.06.0~ce~3-0~ubuntu",
-        "docker_compose_version": "1.22.0"
+        "docker_compose_version": "1.22.0",
+        "ami_filter_name": "*ubuntu-bionic-18.04-amd64-server-*",
+        "ami_description": "An Ubuntu 18.04 LTS AMI for TeamCity agents."
     },
     "builders": [
         {
             "name": "teamcity-agent-ami",
             "ami_name": "{{ user `ami_base_name` }}-{{isotime | clean_ami_name}}",
-            "ami_description": "An Ubuntu 18.04 AMI for TeamCity agents.",
+            "ami_description": "{{ user `ami_description` }}",
             "instance_type": "t3.micro",
             "region": "{{user `aws_region`}}",
             "type": "amazon-ebs",
             "subnet_id": "{{user `subnet_id`}}",
             "associate_public_ip_address": "{{user `associate_public_ip_address`}}",
             "ssh_interface": "{{user `ssh_interface`}}",
-            "temporary_security_group_source_cidr": "{{user `temporary_security_group_source_cidr`}}",
+            "temporary_security_group_source_cidrs": "{{user `temporary_security_group_source_cidr`}}",
             "source_ami_filter": {
                 "filters": {
                     "virtualization-type": "hvm",
                     "architecture": "x86_64",
-                    "name": "*ubuntu-bionic-18.04-amd64-server-*",
+                    "name": "{{ user `ami_filter_name` }}",
                     "block-device-mapping.volume-type": "gp2",
                     "root-device-type": "ebs"
                 },
