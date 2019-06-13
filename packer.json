@@ -25,7 +25,7 @@
             "subnet_id": "{{user `subnet_id`}}",
             "associate_public_ip_address": "{{user `associate_public_ip_address`}}",
             "ssh_interface": "{{user `ssh_interface`}}",
-            "temporary_security_group_source_cidrs": "{{user `temporary_security_group_source_cidr`}}",
+            "temporary_security_group_source_cidrs": "{{user `temporary_security_group_source_cidrs`}}",
             "source_ami_filter": {
                 "filters": {
                     "virtualization-type": "hvm",
@@ -49,6 +49,7 @@
             ],
             "ssh_username": "ubuntu",
             "run_tags": {
+                "asd": "{{user `temporary_security_group_source_cidr`}}",
                 "Name": "{{user `ami_base_name` }}-{{isotime | clean_ami_name}}",
                 "Base Name": "{{user `ami_base_name` }}",
                 "Timestamp": "{{isotime \"2006-01-02 03:04:05\"}}",
