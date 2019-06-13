@@ -1,5 +1,5 @@
 {
-    "min_packer_version": "1.1.2",
+    "min_packer_version": "1.4.0",
     "variables": {
         "teamcity_base_url": "",
         "ami_base_name": "teamcity-agent",
@@ -25,7 +25,7 @@
             "subnet_id": "{{user `subnet_id`}}",
             "associate_public_ip_address": "{{user `associate_public_ip_address`}}",
             "ssh_interface": "{{user `ssh_interface`}}",
-            "temporary_security_group_source_cidrs": "{{user `temporary_security_group_source_cidr`}}",
+            "temporary_security_group_source_cidrs": "{{user `temporary_security_group_source_cidrs`}}",
             "source_ami_filter": {
                 "filters": {
                     "virtualization-type": "hvm",

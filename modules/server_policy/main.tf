@@ -33,6 +33,16 @@ data "aws_iam_policy_document" "teamcity_server_cloud_profile" {
   }
 
   statement {
+    sid = "InstanceProfileModifyAttributes"
+
+    actions = [
+      "ec2:ModifyInstanceAttribute",
+    ]
+
+    resources = ["*"]
+  }
+
+  statement {
     sid = "InstanceProfileRestrictions"
 
     actions = [
