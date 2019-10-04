@@ -47,7 +47,7 @@ data "aws_iam_policy_document" "teamcity_server_cloud_profile" {
     condition {
       test     = "ArnEquals"
       variable = "ec2:InstanceProfile"
-      values   = var.agent_instance_profile_arn
+      values   = [var.agent_instance_profile_arn]
     }
   }
 
@@ -69,7 +69,7 @@ data "aws_iam_policy_document" "teamcity_server_cloud_profile" {
     condition {
       test     = "ArnEqualsIfExists"
       variable = "ec2:InstanceProfile"
-      values   = var.agent_instance_profile_arn
+      values   = [var.agent_instance_profile_arn]
     }
   }
 
