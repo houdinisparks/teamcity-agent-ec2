@@ -43,7 +43,7 @@ resource "aws_security_group" "agent" {
   description = "Security group for agents in VPC ${element(var.vpc_ids, count.index)}"
   vpc_id      = element(var.vpc_ids, count.index)
 
-  tags = merge(var.tags, map("Name", "${var.security_group_name))}"
+  tags = merge(var.tags, map("Name", var.security_group_name))
 }
 
 resource "aws_iam_policy" "teamcity_server_cloud_agents" {
