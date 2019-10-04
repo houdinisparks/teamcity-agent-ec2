@@ -1,5 +1,5 @@
 module "server_policy" {
-  source = "modules/server_policy"
+  source = "./modules/server_policy"
 
   ami_ids      = var.ami_ids
   key_pair_ids = var.key_pair_ids
