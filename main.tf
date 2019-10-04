@@ -9,7 +9,7 @@ module "server_policy" {
 
   agent_role_arn             = aws_iam_role.agent.arn
   agent_instance_profile_arn = aws_iam_instance_profile.agent.arn
-  security_group_ids         = aws_security_group.agent.id
+  security_group_ids         = aws_security_group.agent.*.id
 }
 
 data "aws_iam_policy_document" "ec2_assume" {
