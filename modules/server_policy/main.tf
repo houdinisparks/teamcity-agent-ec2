@@ -1,9 +1,9 @@
 locals {
-  ami_arns            = "${formatlist("arn:aws:ec2:*:*:image/%s", var.ami_ids)}"
-  subnet_arns         = "${formatlist("arn:aws:ec2:*:*:subnet/%s", var.subnet_ids)}"
-  key_pair_arns       = "${formatlist("arn:aws:ec2:*:*:key-pair/%s", var.key_pair_ids)}"
-  security_group_arns = "${formatlist("arn:aws:ec2:*:*:security-group/%s", var.security_group_ids)}"
-  vpc_arns            = "${formatlist("arn:aws:ec2:*:*:vpc/%s", var.vpc_ids)}"
+  ami_arns            = formatlist("arn:aws:ec2:*:*:image/%s", var.ami_ids)
+  subnet_arns         = formatlist("arn:aws:ec2:*:*:subnet/%s", var.subnet_ids)
+  key_pair_arns       = formatlist("arn:aws:ec2:*:*:key-pair/%s", var.key_pair_ids)
+  security_group_arns = formatlist("arn:aws:ec2:*:*:security-group/%s", var.security_group_ids)
+  vpc_arns            = formatlist("arn:aws:ec2:*:*:vpc/%s", var.vpc_ids)
 
   run_instances_wildcard = [
     "arn:aws:ec2:*:*:instance/*",
@@ -15,7 +15,7 @@ locals {
     "arn:aws:ec2:*:*:elastic-gpu/*",
   ]
 
-  run_instances_resources = ["${sort(concat(local.run_instances_wildcard, local.ami_arns, local.subnet_arns, local.key_pair_arns, local.security_group_arns))}"]
+  run_instances_resources = sort(concat(local.run_instances_wildcard, local.ami_arns, local.subnet_arns, local.key_pair_arns, local.security_group_arns))
 }
 
 data "aws_iam_policy_document" "teamcity_server_cloud_profile" {
@@ -47,7 +47,7 @@ data "aws_iam_policy_document" "teamcity_server_cloud_profile" {
     condition {
       test     = "ArnEquals"
       variable = "ec2:InstanceProfile"
-      values   = ["${var.agent_instance_profile_arn}"]
+      values   = [var.agent_instance_profile_arn]
     }
   }
 
@@ -58,18 +58,18 @@ data "aws_iam_policy_document" "teamcity_server_cloud_profile" {
       "ec2:RunInstances",
     ]
 
-    resources = ["${local.run_instances_resources}"]
+    resources = local.run_instances_resources
 
     condition {
       test     = "ArnEqualsIfExists"
       variable = "ec2:Vpc"
-      values   = ["${local.vpc_arns}"]
+      values   = local.vpc_arns
     }
 
     condition {
       test     = "ArnEqualsIfExists"
       variable = "ec2:InstanceProfile"
-      values   = ["${var.agent_instance_profile_arn}"]
+      values   = [var.agent_instance_profile_arn]
     }
   }
 
@@ -92,7 +92,7 @@ data "aws_iam_policy_document" "teamcity_server_cloud_profile" {
       "ec2:CancelSpotInstanceRequests",
     ]
 
-    effect = "${var.allow_spot ? "Allow" : "Deny"}"
+    effect = var.allow_spot ? "Allow" : "Deny"
 
     resources = ["*"]
   }
@@ -115,7 +115,7 @@ data "aws_iam_policy_document" "teamcity_server_cloud_profile" {
     ]
 
     resources = [
-      "${var.agent_role_arn}",
+      var.agent_role_arn,
     ]
 
     condition {

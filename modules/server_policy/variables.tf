@@ -8,26 +8,36 @@ variable "agent_role_arn" {
 
 variable "ami_ids" {
   description = "List of AMI IDs that can be launched by the TeamCity server"
+  type        = list(string)
+
   default     = ["*"]
 }
 
 variable "subnet_ids" {
   description = "List of Subnet IDs that instances can be launched into by TeamCity server"
+  type        = list(string)
+
   default     = ["*"]
 }
 
 variable "key_pair_ids" {
   description = "List of Key Pair IDs that can be used with instances launched by TeamCity server"
+  type        = list(string)
+
   default     = ["*"]
 }
 
 variable "security_group_ids" {
   description = "List of security group IDs that can be attached to instances launched by TeamCity server"
+  type        = list(string)
+
   default     = ["*"]
 }
 
 variable "vpc_ids" {
   description = "List of VPC IDs that instances can be launched into by TeamCity server"
+  type        = list(string)
+
   default     = ["*"]
 }
 
