@@ -10,38 +10,43 @@ variable "ami_ids" {
   description = "List of AMI IDs that can be launched by the TeamCity server"
   type        = list(string)
 
-  default     = ["*"]
+  default = ["*"]
 }
 
 variable "subnet_ids" {
   description = "List of Subnet IDs that instances can be launched into by TeamCity server"
   type        = list(string)
 
-  default     = ["*"]
+  default = ["*"]
 }
 
 variable "key_pair_ids" {
   description = "List of Key Pair IDs that can be used with instances launched by TeamCity server"
   type        = list(string)
 
-  default     = ["*"]
+  default = ["*"]
 }
 
 variable "security_group_ids" {
   description = "List of security group IDs that can be attached to instances launched by TeamCity server"
   type        = list(string)
 
-  default     = ["*"]
+  default = ["*"]
 }
 
 variable "vpc_ids" {
   description = "List of VPC IDs that instances can be launched into by TeamCity server"
   type        = list(string)
 
-  default     = ["*"]
+  default = ["*"]
 }
 
 variable "allow_spot" {
   description = "Allow TeamCity server to use spot instances"
+  default     = false
+}
+
+variable "allow_modify_instance_attribute" {
+  description = "Allow Teamcity server to modify the instances attribute."
   default     = false
 }
