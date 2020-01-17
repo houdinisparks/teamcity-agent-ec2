@@ -10,7 +10,7 @@ variable "subnet_ids" {
   description = "List of Subnet IDs that instances can be launched into by TeamCity server"
   type        = list(string)
 
-  default     = ["*"]
+  default = ["*"]
 }
 
 variable "server_policy_name" {
@@ -22,14 +22,14 @@ variable "ami_ids" {
   description = "List of AMI IDs that can be launched by the TeamCity server"
   type        = list(string)
 
-  default     = ["*"]
+  default = ["*"]
 }
 
 variable "key_pair_ids" {
   description = "List of Key Pair IDs that can be used with instances launched by TeamCity server"
   type        = list(string)
 
-  default     = ["*"]
+  default = ["*"]
 }
 
 variable "allow_spot" {
@@ -69,4 +69,9 @@ variable "tags" {
   default = {
     Terraform = "true"
   }
+}
+
+variable "allow_modify_instance_attribute" {
+  description = "Allow Teamcity server to modify the instances attribute."
+  default     = false
 }

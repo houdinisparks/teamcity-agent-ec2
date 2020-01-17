@@ -32,6 +32,19 @@ data "aws_iam_policy_document" "teamcity_server_cloud_profile" {
     resources = ["*"]
   }
 
+  dynamic "statement" {
+    for_each = "${var.allow_modify_instance_attribute}" ? [1] : []
+    content {
+      sid = "InstanceProfileModifyAttributes"
+
+      actions = [
+        "ec2:ModifyInstanceAttribute",
+      ]
+
+      resources = ["*"]
+    }
+  }
+
   statement {
     sid = "InstanceProfileRestrictions"
 

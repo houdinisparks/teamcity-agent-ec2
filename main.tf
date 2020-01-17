@@ -1,11 +1,12 @@
 module "server_policy" {
   source = "./modules/server_policy"
 
-  ami_ids      = var.ami_ids
-  key_pair_ids = var.key_pair_ids
-  subnet_ids   = var.subnet_ids
-  vpc_ids      = var.vpc_ids
-  allow_spot   = var.allow_spot
+  ami_ids                         = var.ami_ids
+  key_pair_ids                    = var.key_pair_ids
+  subnet_ids                      = var.subnet_ids
+  vpc_ids                         = var.vpc_ids
+  allow_spot                      = var.allow_spot
+  allow_modify_instance_attribute = var.allow_modify_instance_attribute
 
   agent_role_arn             = aws_iam_role.agent.arn
   agent_instance_profile_arn = aws_iam_instance_profile.agent.arn
